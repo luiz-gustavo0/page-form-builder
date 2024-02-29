@@ -4,6 +4,8 @@ import { currentUser } from '@clerk/nextjs';
 
 import prisma from '@/lib/prisma';
 
+import { FormValues, formSchema } from '@/schemas/form';
+
 class UserNotFoundError extends Error {}
 
 export async function GetFormStats() {
@@ -40,4 +42,32 @@ export async function GetFormStats() {
     submissionsRate,
     bounceRate,
   };
+}
+
+export async function CreateForm(data: FormValues) {
+  const validation = formSchema.safeParse(data);
+
+  if (!validation.success) {
+    throw new Error('Form not valid');
+  }
+
+  const user = await currentUser();
+
+  if (!user) {
+    throw new UserNotFoundError();
+  }
+
+  const form = await prisma.form.create({
+    data: {
+      userId: user.id,
+      name: data.name,
+      description: data.description,
+    },
+  });
+
+  if (!form) {
+    throw new Error('Something went wrong');
+  }
+
+  return form.id;
 }
