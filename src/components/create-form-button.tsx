@@ -1,7 +1,9 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { FilePlus, Loader2 } from 'lucide-react';
 
 import { Button } from './ui/button';
 import {
@@ -23,13 +25,13 @@ import {
 } from './ui/form';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
-import { FilePlus, Loader2 } from 'lucide-react';
 import { toast } from './ui/use-toast';
 
 import { FormValues, formSchema } from '@/schemas/form';
 import { CreateForm } from '@/actions/form';
 
 export const CreateFormButton = () => {
+  const router = useRouter();
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
   });
@@ -43,6 +45,8 @@ export const CreateFormButton = () => {
         description: 'Successfully created form',
         variant: 'default',
       });
+
+      router.push(`/builder/${formId}`);
     } catch (error) {
       toast({
         title: 'Error',

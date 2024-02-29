@@ -1,12 +1,13 @@
-import { GetFormStats } from '@/actions/form';
-import { CardStats } from './card';
 import {
   GanttChartSquare,
   MousePointerClick,
   Split,
   ViewIcon,
-  Waypoints,
 } from 'lucide-react';
+
+import { CardStats } from './card';
+
+import { GetFormStats } from '@/actions/form';
 
 type StatsCardProps = {
   stats?: Awaited<ReturnType<typeof GetFormStats>>;
