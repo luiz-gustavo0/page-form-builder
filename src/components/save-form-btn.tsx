@@ -33,7 +33,7 @@ export const SaveFormBtn = ({ id }: { id: string }) => {
       variant='outline'
       className='gap-2'
       disabled={loading}
-      onClick={updateFormContent}
+      onClick={() => startTransiton(updateFormContent)}
     >
       {loading ? (
         <Loader2 size={16} className='animate-spin' />
