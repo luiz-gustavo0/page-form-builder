@@ -10,7 +10,8 @@ import { DesignerElementWrapper } from './designer-element';
 import { ElementsType, FormElements } from './form-elements';
 
 export const Designer = () => {
-  const { addElement, elements } = useDesigner();
+  const { addElement, elements, selectedElement, setSelectedElement } =
+    useDesigner();
   const droppable = useDroppable({
     id: 'designer-drop-area',
     data: {
@@ -39,7 +40,14 @@ export const Designer = () => {
 
   return (
     <div className='flex w-full h-full'>
-      <div className='p-4 w-full'>
+      <div
+        className='p-4 w-full'
+        onClick={() => {
+          if (selectedElement) {
+            setSelectedElement(null);
+          }
+        }}
+      >
         <div
           ref={droppable.setNodeRef}
           className={cn(
