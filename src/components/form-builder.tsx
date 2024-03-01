@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import {
   DndContext,
   MouseSensor,
@@ -10,17 +11,22 @@ import {
 
 import { Form } from '@prisma/client';
 
+import { useDesigner } from '@/hooks/useDesigner';
+
 import { PreviewDialogBtn } from './preview-dialog-btn';
 import { SaveFormBtn } from './save-form-btn';
 import { PublishFormBtn } from './publish-form-btn';
 import { Designer } from './designer';
 import { DragOverlayWrapper } from './drag-overlay-wrapper';
+import { Loader2 } from 'lucide-react';
 
 type FormBuilderProps = {
   form: Form;
 };
 
 export const FormBuilder = ({ form }: FormBuilderProps) => {
+  const [isReady, setIsReady] = useState(false);
+  const { setElements } = useDesigner();
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
       distance: 10, // 10px
@@ -35,6 +41,28 @@ export const FormBuilder = ({ form }: FormBuilderProps) => {
   });
 
   const sensors = useSensors(mouseSensor, touchSensor);
+
+  useEffect(() => {
+    if (isReady) return;
+
+    const elements = JSON.parse(form.content);
+    setElements(elements);
+
+    const readTimout = setTimeout(() => setIsReady(true), 500);
+
+    return () => {
+      clearTimeout(readTimout);
+    };
+  }, [form, isReady, setElements]);
+
+  if (!isReady) {
+    return (
+      <div className='flex flex-col items-center justify-center w-full h-full'>
+        <Loader2 className='animate-spin h-12 w-12' />
+      </div>
+    );
+  }
+
   return (
     <DndContext sensors={sensors}>
       <main className='flex flex-col w-full'>
@@ -47,7 +75,7 @@ export const FormBuilder = ({ form }: FormBuilderProps) => {
             <PreviewDialogBtn />
             {!form.published && (
               <>
-                <SaveFormBtn />
+                <SaveFormBtn id={form.id} />
                 <PublishFormBtn />
               </>
             )}
