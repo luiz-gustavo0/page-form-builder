@@ -9,7 +9,7 @@ export type FormElement = {
     icon: React.ElementType;
     label: string;
   };
-  designerComponent: React.FC;
+  designerComponent: React.FC<{ elementInstance: FormElementInstance }>;
   formCompoonent: React.FC;
   propertiesComponent: React.FC;
 };
