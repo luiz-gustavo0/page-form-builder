@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ClerkProvider } from '@clerk/nextjs';
+import NextTopLoader from 'nextjs-toploader';
 
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import { DesignerContextProvider } from '@/components/context/desiner-context';
@@ -24,6 +25,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang='en'>
         <body className={inter.className}>
+          <NextTopLoader color='#6d28d9' />
           <DesignerContextProvider>
             <ThemeProvider
               attribute='class'
