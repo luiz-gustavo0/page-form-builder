@@ -48,7 +48,7 @@ export const FormCard = ({ form }: FormCardProps) => {
       <CardFooter>
         {form.published && (
           <Button asChild className='w-full mt-3 gap-4'>
-            <Link href={`/forms${form.id}`}>
+            <Link href={`/forms/${form.id}`}>
               View submissions
               <ExternalLink size={16} />
             </Link>

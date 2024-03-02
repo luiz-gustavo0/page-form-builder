@@ -13,9 +13,8 @@ type DesignerElementProps = {
 };
 
 export const DesignerElementWrapper = ({ element }: DesignerElementProps) => {
-  const DesignerElement = FormElements[element.type].designerComponent;
   const [mouseIsOver, setMouseIsOver] = useState(false);
-  const { removeElement } = useDesigner();
+  const { removeElement, setSelectedElement, selectedElement } = useDesigner();
 
   const topHalf = useDroppable({
     id: element.id + '-top',
@@ -46,6 +45,8 @@ export const DesignerElementWrapper = ({ element }: DesignerElementProps) => {
 
   if (draggable.isDragging) return null;
 
+  const DesignerElement = FormElements[element.type].designerComponent;
+
   return (
     <div
       ref={draggable.setNodeRef}
@@ -54,6 +55,10 @@ export const DesignerElementWrapper = ({ element }: DesignerElementProps) => {
       className='relative h-[120px] flex flex-col text-foreground hover:cursor-pointer rounded-md right-1 ring-accent ring-inset'
       onMouseEnter={() => setMouseIsOver(true)}
       onMouseLeave={() => setMouseIsOver(false)}
+      onClick={(e) => {
+        e.stopPropagation();
+        setSelectedElement(element);
+      }}
     >
       <div
         ref={topHalf.setNodeRef}
@@ -69,7 +74,10 @@ export const DesignerElementWrapper = ({ element }: DesignerElementProps) => {
             <Button
               className='flex justify-center h-full border rounded-md rounded-l-none bg-red-500'
               variant='outline'
-              onClick={() => removeElement(element.id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                removeElement(element.id);
+              }}
             >
               <Trash2 size={24} />
             </Button>

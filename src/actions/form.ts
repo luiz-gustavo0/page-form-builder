@@ -102,3 +102,72 @@ export async function GetFormById(id: string) {
     },
   });
 }
+
+export async function UpddateFormContent(id: string, jsonContent: string) {
+  const user = await currentUser();
+  if (!user) {
+    throw new UserNotFoundError();
+  }
+
+  return await prisma.form.update({
+    where: {
+      userId: user.id,
+      id,
+    },
+    data: {
+      content: jsonContent,
+    },
+  });
+}
+
+export async function PublishForm(id: string) {
+  const user = await currentUser();
+  if (!user) {
+    throw new UserNotFoundError();
+  }
+
+  return await prisma.form.update({
+    data: {
+      published: true,
+    },
+    where: {
+      userId: user.id,
+      id,
+    },
+  });
+}
+
+export async function GetFormContentByUrl(formUrl: string) {
+  return await prisma.form.update({
+    select: {
+      content: true,
+    },
+    data: {
+      visits: {
+        increment: 1,
+      },
+    },
+    where: {
+      shareUrl: formUrl,
+    },
+  });
+}
+
+export async function SubmitForm(formUrl: string, jsonContent: string) {
+  return await prisma.form.update({
+    data: {
+      submissions: {
+        increment: 1,
+      },
+      FormSubmissions: {
+        create: {
+          content: jsonContent,
+        },
+      },
+    },
+    where: {
+      shareUrl: formUrl,
+      published: true,
+    },
+  });
+}
