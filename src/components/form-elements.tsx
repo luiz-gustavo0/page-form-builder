@@ -1,6 +1,7 @@
 import { TextFieldFormElement } from './fields/text';
 
 export type ElementsType = 'TextField';
+export type SubmitFunction = (key: string, value: string) => void;
 
 export type FormElement = {
   type: ElementsType;
@@ -10,8 +11,15 @@ export type FormElement = {
     label: string;
   };
   designerComponent: React.FC<{ elementInstance: FormElementInstance }>;
-  formCompoonent: React.FC<{ elementInstance: FormElementInstance }>;
+  formCompoonent: React.FC<{
+    elementInstance: FormElementInstance;
+    submitValue?: SubmitFunction;
+    isInvalid?: boolean;
+    defaultValue?: string;
+  }>;
   propertiesComponent: React.FC<{ elementInstance: FormElementInstance }>;
+
+  validate: (formElememt: FormElementInstance, currentValue: string) => boolean;
 };
 
 export type FormElementInstance = {
