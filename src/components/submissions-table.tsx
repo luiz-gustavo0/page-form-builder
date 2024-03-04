@@ -34,6 +34,11 @@ export const SubmissionsTable = async ({ id }: { id: string }) => {
   formElements.forEach((element) => {
     switch (element.type) {
       case 'TextField':
+      case 'NumberField':
+      case 'TextAreaField':
+      case 'DateField':
+      case 'SelectFiield':
+      case 'CheckboxField':
         columns.push({
           id: element.id,
           label: element.extraAttributes?.label,
