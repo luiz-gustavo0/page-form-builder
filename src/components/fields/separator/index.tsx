@@ -1,4 +1,4 @@
-import { SeparatorHorizontal } from 'lucide-react';
+import { Minus } from 'lucide-react';
 
 import { ElementsType, FormElement } from '@/components/form-elements';
 import { DesignerComponent } from './designer';
@@ -14,7 +14,7 @@ export const SeparatorFieldFormElement: FormElement = {
     type,
   }),
   designerBtnElement: {
-    icon: SeparatorHorizontal,
+    icon: Minus,
     label: 'Separator field',
   },
   designerComponent: DesignerComponent,
