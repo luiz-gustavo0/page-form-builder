@@ -95,8 +95,7 @@ export const DesignerElementWrapper = ({ element }: DesignerElementProps) => {
       <div
         className={cn(
           'flex w-full h-[120px] items-center rounded-md bg-accent/40 px-4 py-2 pointer-events-none opacity-100',
-          mouseIsOver && 'opacity-30',
-          element.type === 'TextAreaField' && 'h-fit'
+          mouseIsOver && 'opacity-30'
         )}
       >
         <DesignerElement elementInstance={element} />

@@ -2,7 +2,9 @@ import { CustomInstance } from '.';
 
 import { FormElementInstance } from '@/components/form-elements';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { CalendarDays } from 'lucide-react';
 
 export function DesignerComponent({
   elementInstance,
@@ -18,7 +20,13 @@ export function DesignerComponent({
         {label}
         {required && '*'}
       </Label>
-      <Textarea readOnly disabled placeholder={placeholder} />
+      <Button
+        variant='outline'
+        className='w-full justify-start text-left font-normal'
+      >
+        <CalendarDays size={16} className='mr-2' />
+        <span>Pick a date</span>
+      </Button>
       {helperText && (
         <p className='text-muted-foreground text-[0.8rem]'>{helperText}</p>
       )}

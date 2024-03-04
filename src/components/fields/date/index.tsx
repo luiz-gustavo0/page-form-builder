@@ -1,4 +1,4 @@
-import { Text } from 'lucide-react';
+import { CalendarDays } from 'lucide-react';
 
 import {
   ElementsType,
@@ -9,21 +9,19 @@ import { DesignerComponent } from './designer';
 import { FormComponent } from './form';
 import { PropertiesComponent } from './properties';
 
-const type: ElementsType = 'TextAreaField';
+const type: ElementsType = 'DateField';
 
 export type CustomInstance = FormElementInstance & {
   extraAttributes: typeof extraAttributes;
 };
 
 const extraAttributes = {
-  label: 'Textarea field',
-  helperText: 'Helper text',
+  label: 'Date field',
+  helperText: 'Pick a date',
   required: false,
-  placeholder: 'Value here...',
-  rows: 1,
 };
 
-export const TextAreaFieldFormElement: FormElement = {
+export const DateFieldFormElement: FormElement = {
   type,
   construct: (id: string) => ({
     id,
@@ -31,8 +29,8 @@ export const TextAreaFieldFormElement: FormElement = {
     extraAttributes,
   }),
   designerBtnElement: {
-    icon: Text,
-    label: 'Textarea field',
+    icon: CalendarDays,
+    label: 'Date field',
   },
   designerComponent: DesignerComponent,
   formCompoonent: FormComponent,
