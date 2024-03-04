@@ -31,7 +31,7 @@ type FormBuilderProps = {
 
 export const FormBuilder = ({ form }: FormBuilderProps) => {
   const [isReady, setIsReady] = useState(false);
-  const { setElements } = useDesigner();
+  const { setElements, setSelectedElement } = useDesigner();
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
       distance: 10, // 10px
@@ -52,13 +52,14 @@ export const FormBuilder = ({ form }: FormBuilderProps) => {
 
     const elements = JSON.parse(form.content);
     setElements(elements);
+    setSelectedElement(null);
 
     const readTimout = setTimeout(() => setIsReady(true), 500);
 
     return () => {
       clearTimeout(readTimout);
     };
-  }, [form, isReady, setElements]);
+  }, [form, isReady, setElements, setSelectedElement]);
 
   if (!isReady) {
     return (
